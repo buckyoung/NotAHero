@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 4710564377347550}
   - component: {fileID: 114215401161236408}
   m_Layer: 0
-  m_Name: TheRoom
+  m_Name: TheOffice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -387,8 +387,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1228533046631712}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4913923181721560}
@@ -400,7 +400,7 @@ Transform:
   - {fileID: 4094750238999824}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4777357799759114
 Transform:
   m_ObjectHideFlags: 1
@@ -459,13 +459,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1287836481715382}
-  m_LocalRotation: {x: 0.41517946, y: -0.2985628, z: 0.07894414, w: 0.8557185}
-  m_LocalPosition: {x: 10.12, y: 16.24, z: -8.52}
+  m_LocalRotation: {x: 0.41937774, y: -0.35266912, z: 0.052234694, w: 0.83487624}
+  m_LocalPosition: {x: 6, y: 11.64, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4710564377347550}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 49.261, y: -43.041, z: -9.954}
+  m_LocalEulerAnglesHint: {x: 47.485, y: -53.761, z: -17.978}
 --- !u!4 &4923662271753048
 Transform:
   m_ObjectHideFlags: 1
@@ -735,7 +735,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8a0799b5b1ad442c49e38c0697d4ec25, type: 2}
+  - {fileID: 2100000, guid: 7aafdd44e12c940b18c25e7ece395055, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

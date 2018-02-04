@@ -32,17 +32,14 @@ public class GameManager : MonoBehaviour {
 
 
 	void Start () {
+//		loadHome ();
+
 		humanTransform = GameObject.Find ("Human").transform;
-
 		humanArmManagerScripts = GetComponentsInChildren<HumanArmManager> ();
+//		humanTransform.eulerAngles = new Vector3 (0, 0, 0);
 
-		roomManagerScript = gameObject.GetComponentInChildren<RoomManager> ();
-
-		GameObject resource = (GameObject)Instantiate(
-			Resources.Load("TheRoom"), 
-			transform.position,
-			Quaternion.identity
-		);
+		// DEBUG OFFICE CREATE
+//		officeManagerScript = resource.GetComponent<RoomManager> ();
 	}
 
 	void Update() {
@@ -123,7 +120,15 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void loadHome() {
-		// TODO BUCK RESUOURCES DOT LOAD PREFAB
+		GameObject resource = (GameObject)Instantiate(
+			Resources.Load("TheRoom"), 
+			new Vector3(0,0,3),
+			Quaternion.identity
+		);
+
+		resource.transform.parent = transform;
+		roomManagerScript = resource.GetComponent<RoomManager> ();
+
 		isHomeLoaded = true;
 	}
 
