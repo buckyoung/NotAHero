@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BadGuyEmitter : MonoBehaviour {
-	private bool canEmit = true;
+	private RoomManager roomManagerScript;
+
+	void Start () {
+		roomManagerScript = gameObject.GetComponentInParent<RoomManager> ();
+	}
 
 	void Update () {
-		if (canEmit) {
-			canEmit = false;
+		if (roomManagerScript.shouldEmit && !roomManagerScript.isGameOver) {
+			roomManagerScript.shouldEmit = false;
 
 			GameObject resource = (GameObject)Instantiate(
 				Resources.Load("BadGuy"), 
@@ -25,6 +29,6 @@ public class BadGuyEmitter : MonoBehaviour {
 	private IEnumerator waitRandom(int min, int max) {
 		float randNum = Random.value  * (max - min) + min;
 		yield return new WaitForSeconds(randNum);
-		canEmit = true;
+		roomManagerScript.shouldEmit = true;
 	}
 }

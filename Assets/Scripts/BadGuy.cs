@@ -4,32 +4,29 @@ using UnityEngine;
 
 public class BadGuy : MonoBehaviour {
 	private float speed = -0.85f;
-	private Animator heroAnimator;
+	private RoomManager roomManagerScript;
 
-	void Start() {
-		GameObject hero = GameObject.Find ("Hero");
-
-		if (hero != null) {
-			heroAnimator = hero.GetComponent<Animator> ();
-		} else {
-			Destroy (gameObject); // kill self if no hero
-		}
+	void Start () {
+		roomManagerScript = gameObject.GetComponentInParent<RoomManager> ();
 	}
 
 	void Update () {
+		if (roomManagerScript.isGameOver) { // kill self if game ends
+			Destroy (gameObject);
+		}
 		transform.position += new Vector3(Time.deltaTime * speed, 0, 0);
 	}
 
 	void OnCollisionEnter(Collision collision) {
-		if (collision.transform.gameObject.name != "Hero") {
+		if (collision.transform.gameObject.name != "Hero") { // only concerned with hero collisions
 			return;
 		}
 
-		if (heroAnimator.GetCurrentAnimatorStateInfo (0).IsName ("HeroSlash")) {
-			Destroy (gameObject);
-		} else {
-			heroAnimator.Play("HeroDeath");
+		if (!roomManagerScript.isHeroSlashing) {
+			roomManagerScript.killHero();
+			return;
 		}
-			
+
+		Destroy (gameObject); // kill self if hero slashed
 	}
 }
