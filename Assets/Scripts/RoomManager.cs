@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomManager : MonoBehaviour {
+	private const float KEYBOARD_MASS = 1.0f;
+
 	private Screen screenScript;
 	private Arm armScript;
 	private BadGuyEmitter badGuyEmitterScript;
@@ -11,6 +13,7 @@ public class RoomManager : MonoBehaviour {
 	private Rigidbody keyboardRb;
 	private Animator heroAnimator;
 	private SpriteRenderer heroRenderer;
+	private Transform humanTransform;
 
 	public bool isComputerOn = false;
 	public bool shouldBackgroundMove = false;
@@ -24,6 +27,7 @@ public class RoomManager : MonoBehaviour {
 		badGuyEmitterScript = gameObject.GetComponentInChildren<BadGuyEmitter> ();
 		heroScript = gameObject.GetComponentInChildren<Hero> ();
 
+		humanTransform = GameObject.Find ("Human").transform;
 		heroAnimator = GameObject.Find ("Hero").GetComponent<Animator>();
 		heroRenderer = GameObject.Find ("Hero").GetComponent<SpriteRenderer>();
 		keyboardRb = GameObject.Find ("Keyboard").GetComponent<Rigidbody>();
@@ -71,8 +75,14 @@ public class RoomManager : MonoBehaviour {
 		}
 
 		heroAnimator.Play("HeroDeath"); // Play hero death
-		keyboardRb.mass = 5; // Be able to throw keyboard when you die
+		keyboardRb.mass = KEYBOARD_MASS; // Be able to throw keyboard when you die
 		endGame();
+	}
+
+	// Calls:
+	// - BadGuy on collision
+	public void addPoint() {
+		// TODO BUCK
 	}
 
 	private IEnumerator startGame() {
@@ -91,5 +101,13 @@ public class RoomManager : MonoBehaviour {
 		isGameOver = true;
 		shouldEmit = false;
 		shouldBackgroundMove = false;
+
+		StartCoroutine(goToWork ());
+	}
+
+	private IEnumerator goToWork() {
+		yield return new WaitForSeconds(1);
+	
+		humanTransform.RotateAround (humanTransform.position, Vector3.up, 180);
 	}
 }

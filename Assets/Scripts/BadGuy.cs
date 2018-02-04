@@ -28,5 +28,7 @@ public class BadGuy : MonoBehaviour {
 		}
 
 		Destroy (gameObject); // kill self if hero slashed
+
+		roomManagerScript.addPoint ();
 	}
 }
