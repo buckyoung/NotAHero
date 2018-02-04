@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
 
-public class Screen : MonoBehaviour {
+public class RoomScreen : MonoBehaviour {
 	private float speed = 0.15f;
 
 	private Renderer r;
@@ -24,6 +24,11 @@ public class Screen : MonoBehaviour {
 			Vector2 offset = new Vector2 (Time.deltaTime * speed, 0);
 			r.material.mainTextureOffset += offset;
 		}
+	}
+
+	void OnDestroy() {
+		Resources.UnloadAsset (gameBackdrop);
+		Resources.UnloadUnusedAssets ();
 	}
 
 	public void powerMonitorOn() {

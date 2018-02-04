@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BadGuyEmitter : MonoBehaviour {
+public class RoomBadGuyEmitter : MonoBehaviour {
 	private RoomManager roomManagerScript;
 
 	void Start () {

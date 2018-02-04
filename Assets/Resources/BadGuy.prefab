@@ -21,11 +21,11 @@ GameObject:
   - component: {fileID: 4686280605574622}
   - component: {fileID: 212339406642944020}
   - component: {fileID: 95037942101477242}
-  - component: {fileID: 114734498113410754}
   - component: {fileID: 65189362078743922}
+  - component: {fileID: 114718376159042636}
   m_Layer: 0
   m_Name: BadGuy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +72,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114734498113410754
+--- !u!114 &114718376159042636
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1124637639538120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d95cc38563be4706801c3c651f98ad9, type: 3}
+  m_Script: {fileID: 11500000, guid: 804136af61bd446caaf08c12a1895fd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212339406642944020
