@@ -41,12 +41,8 @@ public class RoomManager : MonoBehaviour {
 		gameManagerScript = gameObject.GetComponentInParent<GameManager> ();
 
 		keyboardRb = GameObject.Find ("Keyboard").GetComponent<Rigidbody>();
-	}
 
-	void Update() {
-		if (isGameOver) {
-			return;
-		}
+		turnOffLights ();
 	}
 
 	// Calls:

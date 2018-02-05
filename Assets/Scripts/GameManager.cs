@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-	private const float ROTATE_SPEED = 10.0f;
+	private const float ROTATE_SPEED = 15.0f;
 
 	private bool shouldHumanRotate = false;
 
@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
 
 	private HumanArmManager[] humanArmManagerScripts;
 	private RoomManager roomManagerScript;
+	private OfficeManager officeManagerScript;
 
 	private GameObject roomInstanceObject;
 	private GameObject officeInstanceObject;
@@ -35,7 +36,8 @@ public class GameManager : MonoBehaviour {
 	public int highestOfficeScore = 0;
 	public int totalOfficeScore = 0;
 
-	public Text theRoomText;
+	public Text[] theRoomScores;
+	public Text[] officeScores;
 
 	void Start () {
 		loadHome ();
@@ -44,8 +46,8 @@ public class GameManager : MonoBehaviour {
 		humanArmManagerScripts = GetComponentsInChildren<HumanArmManager> ();
 		humanTransform.eulerAngles = new Vector3 (0, 0, 0);
 
-		theRoomText.text = "";
-
+		setRoomScoreTexts ("");
+		setOfficeScoreTexts ("");
 	}
 
 	void Update() {
@@ -108,11 +110,31 @@ public class GameManager : MonoBehaviour {
 
 		if (isAtHome) {
 			roomManagerScript.onKeyDown ();
+		} else if (isAtOffice) {
+			officeManagerScript.onKeyDown (input);
 		}
 	}
 
 	// Calls:
 	// - RoomManager on end game
+	public void setOfficeScore(int score) {
+		todaysOfficeScore = score;
+		totalOfficeScore += score;
+
+		if (score > highestOfficeScore) {
+			highestOfficeScore = score;
+		}
+
+		if (day == 1) { 
+			setOfficeScoreTexts ("Last Output: " + todaysOfficeScore);
+			return;
+		}
+
+		setOfficeScoreTexts ("Last Output: " + todaysOfficeScore + "\n" + "Most Output: " + highestOfficeScore + "\n" + "Total Output: " + totalOfficeScore);
+	}
+
+	// Calls:
+	// - OfficeManager on day end
 	public void setRoomScore(int score) {
 		todaysRoomScore = score;
 		totalRoomScore += score;
@@ -122,11 +144,11 @@ public class GameManager : MonoBehaviour {
 		}
 
 		if (day == 0) { 
-			theRoomText.text = "High Score: " + highestRoomScore;
+			setRoomScoreTexts ("High Score: " + highestRoomScore);
 			return;
 		}
 
-		theRoomText.text = "Last Score: " + todaysRoomScore + "\n" + "High Score: " + highestRoomScore + "\n" + "Total Score: " + totalRoomScore;
+		setRoomScoreTexts ("Last Score: " + todaysRoomScore + "\n" + "High Score: " + highestRoomScore + "\n" + "Total Score: " + totalRoomScore);
 	}
 
 	public void incrementDay() {
@@ -142,7 +164,7 @@ public class GameManager : MonoBehaviour {
 		);
 
 		officeInstanceObject.transform.parent = transform;
-//		roomManagerScript = officeInstanceObject.GetComponent<RoomManager> ();
+		officeManagerScript = officeInstanceObject.GetComponent<OfficeManager> ();
 
 		isOfficeLoaded = true;
 	}
@@ -168,5 +190,17 @@ public class GameManager : MonoBehaviour {
 	private void unloadHome() {
 		GameObject.Destroy (roomInstanceObject);
 		isHomeLoaded = false;
+	}
+
+	private void setRoomScoreTexts(string value) {
+		foreach (Text item in theRoomScores) {
+			item.text = value;	
+		}
+	}
+
+	private void setOfficeScoreTexts(string value) {
+		foreach (Text item in officeScores) {
+			item.text = value;	
+		}
 	}
 }
