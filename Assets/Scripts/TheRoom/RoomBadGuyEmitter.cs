@@ -22,7 +22,7 @@ public class RoomBadGuyEmitter : MonoBehaviour {
 			resource.transform.SetParent(this.transform);
 			Destroy(resource, 5.5f);
 
-			StartCoroutine(waitRandom(2, 6));
+			StartCoroutine(waitRandom(1, 4));
 		}
 	}
 

@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour {
 
 	public Text[] theRoomScores;
 	public Text[] officeScores;
+	public Text[] dayTexts;
 
 	void Start () {
 		loadHome ();
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour {
 
 		setRoomScoreTexts ("");
 		setOfficeScoreTexts ("");
+		setDayTexts ("");
 	}
 
 	void Update() {
@@ -61,7 +63,7 @@ public class GameManager : MonoBehaviour {
 				isGoingToOffice = false;
 				isAtOffice = true;
 				incrementDay ();
-			} else if (isGoingHome && humanTransform.eulerAngles.y > 359.8) {
+			} else if (isGoingHome && (humanTransform.eulerAngles.y > 359.8 || humanTransform.eulerAngles.y < 100)) {
 				humanTransform.eulerAngles = new Vector3 (0, 0, 0);
 				shouldHumanRotate = false;
 
@@ -153,7 +155,7 @@ public class GameManager : MonoBehaviour {
 
 	public void incrementDay() {
 		day++;
-		// TODO UPDATE LABEL
+		setDayTexts ("Day " + day.ToString ());
 	}
 
 	private void loadOffice() {
@@ -200,6 +202,12 @@ public class GameManager : MonoBehaviour {
 
 	private void setOfficeScoreTexts(string value) {
 		foreach (Text item in officeScores) {
+			item.text = value;	
+		}
+	}
+
+	private void setDayTexts(string value) {
+		foreach (Text item in dayTexts) {
 			item.text = value;	
 		}
 	}

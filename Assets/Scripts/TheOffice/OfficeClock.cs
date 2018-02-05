@@ -8,7 +8,7 @@ public class OfficeClock : MonoBehaviour {
 	private TextMesh timeText;
 	private OfficeManager officeManagerScript;
 
-	private string[] times = {"09:00", "10:00", "11:00", "12:00", "01:00", "02:00", "03:00", "04:00", "05:00"};
+	private string[] times = { "09:00", "10:00", "11:00", "12:00", "01:00", "02:00", "03:00", "04:00", "05:00"};
 
 	private int count = 0;
 

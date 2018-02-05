@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour {
 	private const float NEW_KEYBOARD_MASS = 1.0f;
-	private const int WAIT_TO_POWER_MONITOR = 0;
-	private const int WAIT_TO_START_GAME = 2;
 	private const int WAIT_BEFORE_EMIT = 4;
 	private const int WAIT_AFTER_GAME_OVER = 4;
 	private const int WAIT_AFTER_POWER_DOWN = 1;
@@ -25,7 +23,7 @@ public class RoomManager : MonoBehaviour {
 	public bool shouldBackgroundMove = false;
 	public bool shouldEmit = false;
 	public bool isGameOver = false;
-	public bool isGameRunning = false;
+	public bool isGameRunning = false; // NOTE: This is never set to false on game end
 
 	private int score = 0;
 
@@ -54,6 +52,12 @@ public class RoomManager : MonoBehaviour {
 
 		if (!isComputerOn) {
 			bootComputer ();
+			return;
+		}
+
+		if (isComputerOn && !isGameRunning) {
+			startGame ();
+			return;
 		}
 
 		if (isGameRunning) {
@@ -82,17 +86,10 @@ public class RoomManager : MonoBehaviour {
 	private void bootComputer() {
 		isComputerOn = true;
 		turnOnLights ();
-		StartCoroutine(powerMonitorOn ());
-	}
-
-	private IEnumerator powerMonitorOn() {
-		yield return new WaitForSeconds(WAIT_TO_POWER_MONITOR);
 		screenScript.powerMonitorOn ();
-		StartCoroutine(startGame());
 	}
 
-	private IEnumerator startGame() {
-		yield return new WaitForSeconds(WAIT_TO_START_GAME);
+	private void startGame() {
 		heroScript.onStartGame ();
 		shouldBackgroundMove = true;
 		isGameRunning = true;

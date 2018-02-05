@@ -30,11 +30,11 @@ public class HumanArmManager : MonoBehaviour {
 	// Calls:
 	// - GameManager onKeyDown event
 	public void onKeyDown(string characters) {
-		int character = characters[0].GetHashCode(); // set the handedness depending on the first character pressed
+		int character = characters [0].GetHashCode (); // set the handedness depending on the first character pressed
 
-		if (handHash.ContainsKey(character) && (ArmEnum)handHash[character] == respondsTo) {
+		if (handHash.ContainsKey (character) && (ArmEnum)handHash [character] == respondsTo) {
 			var magnitude = Input.inputString.Length * forceScaling;
-			rb.AddRelativeForce(forceVector * magnitude); // add force that scales with how many keys were hit
+			rb.AddRelativeForce (forceVector * magnitude); // add force that scales with how many keys were hit
 		}
 	}
 }
