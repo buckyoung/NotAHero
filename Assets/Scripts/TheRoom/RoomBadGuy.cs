@@ -14,6 +14,7 @@ public class RoomBadGuy : MonoBehaviour {
 		if (roomManagerScript.isGameOver) { // kill self if game ends
 			Destroy (gameObject);
 		}
+
 		transform.position += new Vector3(Time.deltaTime * speed, 0, 0);
 	}
 }

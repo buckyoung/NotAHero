@@ -9,6 +9,7 @@ public class RoomScreen : MonoBehaviour {
 
 	private Renderer r;
 	private Material gameBackdrop;
+	private Material monitorOffMaterial;
 	private RoomManager roomManagerScript;
 
 	void Start () {
@@ -33,7 +34,14 @@ public class RoomScreen : MonoBehaviour {
 
 	public void powerMonitorOn() {
 		Material[] mats = r.materials;
+		monitorOffMaterial = mats [0]; // cache this mat
 		mats [0] = gameBackdrop;
+		r.materials = mats;
+	}
+
+	public void powerMonitorOff() {
+		Material[] mats = r.materials;
+		mats [0] = monitorOffMaterial;
 		r.materials = mats;
 	}
 }

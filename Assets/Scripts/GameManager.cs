@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-	private const float ROTATE_SPEED = 20.0f;
+	private const float ROTATE_SPEED = 10.0f;
 
 	private bool shouldHumanRotate = false;
 
@@ -20,39 +21,45 @@ public class GameManager : MonoBehaviour {
 	private HumanArmManager[] humanArmManagerScripts;
 	private RoomManager roomManagerScript;
 
+	private GameObject roomInstanceObject;
+	private GameObject officeInstanceObject;
+
 	// UI
-	public int day = 1;
+	public int day = 0;
 
 	public int todaysRoomScore = 0;
 	public int highestRoomScore = 0;
+	public int totalRoomScore = 0;
 
 	public int todaysOfficeScore = 0;
 	public int highestOfficeScore = 0;
+	public int totalOfficeScore = 0;
 
-
+	public Text theRoomText;
 
 	void Start () {
-//		loadHome ();
+		loadHome ();
 
 		humanTransform = GameObject.Find ("Human").transform;
 		humanArmManagerScripts = GetComponentsInChildren<HumanArmManager> ();
-//		humanTransform.eulerAngles = new Vector3 (0, 0, 0);
+		humanTransform.eulerAngles = new Vector3 (0, 0, 0);
 
-		// DEBUG OFFICE CREATE
-//		officeManagerScript = resource.GetComponent<RoomManager> ();
+		theRoomText.text = "";
+
 	}
 
 	void Update() {
 		if (shouldHumanRotate) {
 			humanTransform.RotateAround (humanTransform.position, Vector3.up, Time.deltaTime*ROTATE_SPEED);
 
-			if (isGoingToOffice && humanTransform.eulerAngles.y > 178) {
+			if (isGoingToOffice && humanTransform.eulerAngles.y > 179.8) {
 				humanTransform.eulerAngles = new Vector3 (0, 180, 0);
 				shouldHumanRotate = false;
 
 				isGoingToOffice = false;
 				isAtOffice = true;
-			} else if (isGoingHome && humanTransform.eulerAngles.y > 358) {
+				incrementDay ();
+			} else if (isGoingHome && humanTransform.eulerAngles.y > 359.8) {
 				humanTransform.eulerAngles = new Vector3 (0, 0, 0);
 				shouldHumanRotate = false;
 
@@ -79,7 +86,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	// Calls:
-	// - RoomManager after game ends
+	// - RoomManager 5 seconds after game ends
 	public void goToWork() {
 		shouldHumanRotate = true;
 		isGoingToOffice = true;
@@ -108,37 +115,58 @@ public class GameManager : MonoBehaviour {
 	// - RoomManager on end game
 	public void setRoomScore(int score) {
 		todaysRoomScore = score;
+		totalRoomScore += score;
 
 		if (score > highestRoomScore) {
 			highestRoomScore = score;
 		}
+
+		if (day == 0) { 
+			theRoomText.text = "High Score: " + highestRoomScore;
+			return;
+		}
+
+		theRoomText.text = "Last Score: " + todaysRoomScore + "\n" + "High Score: " + highestRoomScore + "\n" + "Total Score: " + totalRoomScore;
+	}
+
+	public void incrementDay() {
+		day++;
+		// TODO UPDATE LABEL
 	}
 
 	private void loadOffice() {
-		// TODO BUCK RESUOURCES DOT LOAD PREFAB
+		officeInstanceObject = (GameObject)Instantiate(
+			Resources.Load("TheOffice"), 
+			new Vector3(0,0,-15),
+			Quaternion.Euler(new Vector3(0,180,0))
+		);
+
+		officeInstanceObject.transform.parent = transform;
+//		roomManagerScript = officeInstanceObject.GetComponent<RoomManager> ();
+
 		isOfficeLoaded = true;
 	}
 
 	private void loadHome() {
-		GameObject resource = (GameObject)Instantiate(
+		roomInstanceObject = (GameObject)Instantiate(
 			Resources.Load("TheRoom"), 
 			new Vector3(0,0,3),
 			Quaternion.identity
 		);
 
-		resource.transform.parent = transform;
-		roomManagerScript = resource.GetComponent<RoomManager> ();
+		roomInstanceObject.transform.parent = transform;
+		roomManagerScript = roomInstanceObject.GetComponent<RoomManager> ();
 
 		isHomeLoaded = true;
 	}
 
 	private void unloadOffice() {
-		// TODO BUCK RESUOURCES DESTROY PREFAB
-		isOfficeLoaded = true;
+		GameObject.Destroy (officeInstanceObject);
+		isOfficeLoaded = false;
 	}
 
 	private void unloadHome() {
-		// TODO BUCK RESUOURCES DESTROY PREFAV
-		isHomeLoaded = true;
+		GameObject.Destroy (roomInstanceObject);
+		isHomeLoaded = false;
 	}
 }
